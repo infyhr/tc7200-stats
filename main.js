@@ -21,16 +21,12 @@ app.on('ready', () => {
     nunjucks.configure('html', { autoescape: true });
 
     // Load the main window
-
     let html = nunjucks.render('index.html');
-    /*let html = nunjucks.render(path.resolve(
-        __dirname, 'html/index.html'
-    ));*/
     html = 'data:text/html,' + encodeURIComponent(html);
     mainWindow.loadURL(html);
 
     /*mainWindow.loadURL(url.format({
-        pathname: path.join(__dirname, '/html/index.html'),
+        pathname: path.join(__dirname, '/html/base.html'),
         protocol: 'file:',
         slashes: true
     }))*/
