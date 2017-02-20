@@ -1,0 +1,15 @@
+{
+  "name": "tc7200-stats",
+  "version": "1.0.0",
+  "description": "Shows live stats from TC7200",
+  "private": true,
+  "main": "main.js",
+  "scripts": {
+    "start": "electron ."
+  },
+  "author": "T.B.",
+  "license": "MIT",
+  "devDependencies": {
+    "electron": "^1.4.15"
+  }
+}

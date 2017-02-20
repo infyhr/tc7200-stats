@@ -1,0 +1,23 @@
+body {
+    margin: 0;padding: 0;
+    font-family: Verdana, Arial, Helvetica, sans-serif;
+    font-size: 0.8rem;
+    color: #222;
+}
+#connectionInfo {
+    margin: 8%;
+}
+#connectionInfo .row {
+    flex: 1;
+    display: flex;
+    flex-wrap: wrap;
+    margin-bottom: 2%;
+}
+.inputWhat {
+    flex: 0 0 130px;
+}
+.inputData {
+    flex: 1;
+    border-radius: 0 2px 2px 0;
+    border: 1px solid hsla(31, 15%, 50%, .25);
+}

@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <title>Connection information</title>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0, shrink-to-fit=no">
+        <link rel="stylesheet" href="css/main.css">
+    </head>
+    <body>
+        <div id="connectionInfo">
+            <div class="row">
+                <span class="inputWhat">Default gateway</span>
+                <input name="defaultGateway" type="text" value="192.168.0.1:80" class="inputData">
+            </div>
+
+            <div class="row">
+                <span class="inputWhat">Protocol</span>
+                <select name="protocol">
+                    <option value="http" selected>HTTP</option>
+                    <option value="https">HTTPS</option>
+                </select>
+            </div>
+
+            <div class="row">
+                <span class="inputWhat">Stats URL</span>
+                <input name="statsURL" type="text" class="inputData">
+            </div>
+
+            <div class="row">
+                <button name="submit" value="Start" style="margin-right: 1%;">Start</button>
+                <button name="abort" value="Abort">Abort</button>
+            </div>
+        </div>
+    </body>
+
+    <script>
+        require('./js/connection.js');
+    </script>
+</html>

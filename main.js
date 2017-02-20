@@ -1,0 +1,84 @@
+const {app, BrowserWindow} = require('electron');
+const url  = require('url');
+const path = require('path');
+const ipc  = require('electron').ipcMain;
+
+let mainWindow;
+let connectionDialog;
+
+app.on('ready', () => {
+    mainWindow = new BrowserWindow({
+        height: 1280,
+        width: 720,
+        show: false // Start as hidden
+    });
+
+    mainWindow.setMenu(null); // Remove the menu
+
+    // Load the main window
+    mainWindow.loadURL(url.format({
+        pathname: path.join(__dirname, 'index.html'),
+        protocol: 'file:',
+        slashes: true
+    }))
+
+    // Load the connection dialog
+    openConnectionDialog();
+
+    // Emitted when the main windows has been closed
+    mainWindow.on('closed', () => {
+        mainWindow = null
+    })
+});
+
+// Grab data from the Connection Dialog
+ipc.on('connectionInit', (event, message) => {
+    console.log("Received: " + message);
+
+    // Since we received, we can close the modal dialog
+    connectionDialog.close();
+
+    // Send it to the renderer now
+    mainWindow.webContents.send('connectionInit', message);
+
+    // Show the main window
+    mainWindow.show();
+
+    // debug
+    mainWindow.webContents.openDevTools();
+});
+
+// Spawns a Connection Dialog
+function openConnectionDialog() {
+    connectionDialog = new BrowserWindow({
+        parent: mainWindow,
+        modal: true,
+        show: true,
+        width: 600,
+        height: 300
+    })
+
+    connectionDialog.setMenu(null);
+
+    connectionDialog.loadURL(url.format({
+        pathname: path.join(__dirname, 'connection.html'),
+        protocol: 'file:',
+        slashes: true
+    }))
+
+    connectionDialog.webContents.openDevTools();
+}
+
+// Quit when all windows are closed.
+app.on('window-all-closed', () => {
+    if (process.platform !== 'darwin') {
+        app.quit()
+    }
+})
+
+// Not sure what this does just yet lol
+app.on('activate', () => {
+    if (win === null) {
+        createWindow()
+    }
+})
