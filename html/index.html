@@ -1,0 +1,30 @@
+{% extends "base.html" %}
+
+{% block content %}
+this is content
+{% endblock %}
+
+{% block footer %}
+<script>
+    /* Since we are using Nunjucks and rendering this whole thing
+    as a data URI, our current path is going to be somewhere deep inside of the
+    node_modules directory. So, instead, to avoid writing "../" about 7 times, it's more
+    elegant to do this the absolute way using the path module. However, we cannot find the 
+    absolute path to the project's root from here. That is why we pass it along as a global variable.*/
+    let remote = require('electron').remote;
+    let path   = require('path');
+    require(path.resolve(
+        remote.getGlobal('projectDir'),
+        'js/index.js'
+    ));
+
+    // debug
+    document.addEventListener('keydown', function (e) {    
+    if (e.which === 123) {
+        remote.getCurrentWindow().webContents.openDevTools();
+    } else if (e.which === 116) {
+        location.reload();
+    }
+    });
+</script>
+{% endblock %}

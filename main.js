@@ -2,25 +2,38 @@ const {app, BrowserWindow} = require('electron');
 const url  = require('url');
 const path = require('path');
 const ipc  = require('electron').ipcMain;
+const nunjucks = require('nunjucks');
 
 let mainWindow;
 let connectionDialog;
+global.projectDir = __dirname;
 
 app.on('ready', () => {
     mainWindow = new BrowserWindow({
-        height: 1280,
-        width: 720,
+        width: 1280,
+        height: 720,
         show: false // Start as hidden
     });
 
     mainWindow.setMenu(null); // Remove the menu
 
+    // test
+    nunjucks.configure('html', { autoescape: true });
+
     // Load the main window
-    mainWindow.loadURL(url.format({
-        pathname: path.join(__dirname, 'index.html'),
+
+    let html = nunjucks.render('index.html');
+    /*let html = nunjucks.render(path.resolve(
+        __dirname, 'html/index.html'
+    ));*/
+    html = 'data:text/html,' + encodeURIComponent(html);
+    mainWindow.loadURL(html);
+
+    /*mainWindow.loadURL(url.format({
+        pathname: path.join(__dirname, '/html/index.html'),
         protocol: 'file:',
         slashes: true
-    }))
+    }))*/
 
     // Load the connection dialog
     openConnectionDialog();
@@ -61,13 +74,18 @@ function openConnectionDialog() {
     connectionDialog.setMenu(null);
 
     connectionDialog.loadURL(url.format({
-        pathname: path.join(__dirname, 'connection.html'),
+        pathname: path.join(__dirname, '/html/connection.html'),
         protocol: 'file:',
         slashes: true
     }))
 
     connectionDialog.webContents.openDevTools();
 }
+
+// Quit when the connection dialog is closed
+/*connectionDialog.on('close', () =>{
+    app.quit();
+});*/
 
 // Quit when all windows are closed.
 app.on('window-all-closed', () => {
