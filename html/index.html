@@ -33,22 +33,17 @@
         <script>
             let stats = []; // Data returned from the gateway
             let index = require('../js/index.js'); // "Serverside" JS
+            let graph  = require('../js/graph.js'); // Own graphs (charts)
 
-            // First get data?
-            stats = index.getData();
-
-            let test  = require('../js/chart.js'); // Own charts
-
+            // Short poll for new data
             setInterval(() => {
                 index.getData(function(results){
                     stats = results;
                 });
 
-                //console.log(stats);
-                //stats[0] = [1, 2, 3, 4, 5, 6];
-                test.myChart.config.data.datasets[0].data = stats[0];
-                //console.log(stats);
-                console.log(test.myChart.update());
+                // Update each chart here
+                graph.myChart.config.data.datasets[0].data = stats[0];
+                graph.myChart.update();
             }, 1000);
 
             // temp debug

@@ -21,8 +21,9 @@ function getRandomArbitrary(min, max) {
 This will be called periodically to load new stats, so called short-polling
 Must be exported because we'd like to access it outside, async events could have also been used
 good read: http://electron.rocks/different-ways-to-communicate-between-main-and-renderer-process/
+
+Also, *must* utilize a callback to return values from an asynchronous request, obviously.
 */
-//exports.getData = () => {
 exports.getData = function(callback) {
     data = [123]; // Will hold all pairs
 
