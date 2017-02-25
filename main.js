@@ -2,7 +2,6 @@ const {app, BrowserWindow} = require('electron');
 const url  = require('url');
 const path = require('path');
 const ipc  = require('electron').ipcMain;
-const nunjucks = require('nunjucks');
 
 let mainWindow;
 let connectionDialog;
@@ -17,19 +16,12 @@ app.on('ready', () => {
 
     mainWindow.setMenu(null); // Remove the menu
 
-    // test
-    nunjucks.configure('html', { autoescape: true });
-
     // Load the main window
-    let html = nunjucks.render('index.html');
-    html = 'data:text/html,' + encodeURIComponent(html);
-    mainWindow.loadURL(html);
-
-    /*mainWindow.loadURL(url.format({
-        pathname: path.join(__dirname, '/html/base.html'),
+    mainWindow.loadURL(url.format({
+        pathname: path.join(__dirname, '/html/index.html'),
         protocol: 'file:',
         slashes: true
-    }))*/
+    }))
 
     // Load the connection dialog
     openConnectionDialog();

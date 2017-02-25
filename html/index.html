@@ -1,30 +1,42 @@
-{% extends "base.html" %}
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <title>tc7200-stats</title>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0, shrink-to-fit=no">
+        <link rel="stylesheet" href="../css/main.css">
+    </head>
+    <body>
+        <header>
+            <div class="row">
+                <img src="http://192.168.0.1/images/header/technicolor-logo.png" />
+                <div class="description">Live statistics</div>
+            </div>
+        </header>
+        <nav>
+            <a href="#" class="active">SnR</a>
+            <a href="#">Power</a>
+        </nav>
 
-{% block content %}
-this is content
-{% endblock %}
+        <script>
+            /* Since we are using Nunjucks and rendering this whole thing
+            as a data URI, our current path is going to be somewhere deep inside of the
+            node_modules directory. So, instead, to avoid writing "../" about 7 times, it's more
+            elegant to do this the absolute way using the path module. However, we cannot find the 
+            absolute path to the project's root from here. That is why we pass it along as a global variable.*/
+            let remote = require('electron').remote;
+            let path   = require('path');
+            require('../js/index.js');
 
-{% block footer %}
-<script>
-    /* Since we are using Nunjucks and rendering this whole thing
-    as a data URI, our current path is going to be somewhere deep inside of the
-    node_modules directory. So, instead, to avoid writing "../" about 7 times, it's more
-    elegant to do this the absolute way using the path module. However, we cannot find the 
-    absolute path to the project's root from here. That is why we pass it along as a global variable.*/
-    let remote = require('electron').remote;
-    let path   = require('path');
-    require(path.resolve(
-        remote.getGlobal('projectDir'),
-        'js/index.js'
-    ));
-
-    // debug
-    document.addEventListener('keydown', function (e) {    
-    if (e.which === 123) {
-        remote.getCurrentWindow().webContents.openDevTools();
-    } else if (e.which === 116) {
-        location.reload();
-    }
-    });
-</script>
-{% endblock %}
+            // debug
+            document.addEventListener('keydown', function (e) {    
+            if (e.which === 123) {
+                remote.getCurrentWindow().webContents.openDevTools();
+            } else if (e.which === 116) {
+                location.reload();
+            }
+            });
+        </script>
+    </body>
+</html>
