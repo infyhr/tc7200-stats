@@ -21,14 +21,10 @@ body {
     border-radius: 0 2px 2px 0;
     border: 1px solid hsla(31, 15%, 50%, .25);
 }
+/* Header */
 header {
     background-image: linear-gradient(to bottom, rgb(84, 84, 87), #000);
     min-height: 50px;
-}
-.row {
-    display: flex;
-    flex: 1;
-    flex-wrap: wrap;
 }
 header .description {
     display: flex;
@@ -37,6 +33,19 @@ header .description {
     color: #999;
     font-size: 1rem;
 }
+/* Flex row */
+.row {
+    display: flex;
+    flex: 1;
+    flex-wrap: wrap;
+}
+.wrapper {
+    display: flex;
+}
+.content {
+    margin: 3%;
+}
+/* Navigation */
 nav {
     background-image: linear-gradient(to bottom, rgb(153, 153, 153), #FFF);
     height: 40px;
@@ -58,5 +67,4 @@ nav a:hover {
 }
 nav a.active {
     background: #FFF;
-    
 }

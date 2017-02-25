@@ -19,17 +19,39 @@
             <a href="#">Power</a>
         </nav>
 
-        <script>
-            /* Since we are using Nunjucks and rendering this whole thing
-            as a data URI, our current path is going to be somewhere deep inside of the
-            node_modules directory. So, instead, to avoid writing "../" about 7 times, it's more
-            elegant to do this the absolute way using the path module. However, we cannot find the 
-            absolute path to the project's root from here. That is why we pass it along as a global variable.*/
-            let remote = require('electron').remote;
-            let path   = require('path');
-            require('../js/index.js');
+        <div class="content">
+            <h1>Signal to Noise ratio</h1>
+            <div class="wrapper">
+                <div class="row">
+                    <canvas id="myChart"></canvas>
+                </div>
+                <div class="row">hello2</div>
+            </div>
+        </div>
 
-            // debug
+        <script src="../node_modules/chart.js/dist/chart.min.js"></script>
+        <script>
+            let stats = []; // Data returned from the gateway
+            let index = require('../js/index.js'); // "Serverside" JS
+
+            // First get data?
+            stats = index.getData();
+
+            let test  = require('../js/chart.js'); // Own charts
+
+            setInterval(() => {
+                index.getData(function(results){
+                    stats = results;
+                });
+
+                //console.log(stats);
+                //stats[0] = [1, 2, 3, 4, 5, 6];
+                test.myChart.config.data.datasets[0].data = stats[0];
+                //console.log(stats);
+                console.log(test.myChart.update());
+            }, 1000);
+
+            // temp debug
             document.addEventListener('keydown', function (e) {    
             if (e.which === 123) {
                 remote.getCurrentWindow().webContents.openDevTools();
