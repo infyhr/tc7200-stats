@@ -14,10 +14,6 @@
                 <div class="description">Live statistics</div>
             </div>
         </header>
-        <nav>
-            <a href="#" class="active">SnR</a>
-            <a href="#">Power</a>
-        </nav>
 
         <div class="content">
             <h1>Downstream Signal to Noise ratio</h1>
@@ -79,7 +75,7 @@
                 graph.pwrLineChart.config.data.labels.push(now);
                 graph.pwrLineChart.config.data.datasets[0].data.push(getAvg(stats[2]));
                 graph.pwrLineChart.update();
-            }, 100000);
+            }, 1000);
 
             function getAvg(arr) {
                 return arr.reduce((a, b) => {
