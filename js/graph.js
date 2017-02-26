@@ -21,7 +21,7 @@ const borderColor = [
 ]
 // Set some default config
 Chart.defaults.global.elements.point.radius = 0;
-Chart.defaults.global.responsive = true;
+Chart.defaults.global.maintainAspectRatio = false;
 Chart.defaults.global.animation = {
     duration: 300,
     easing: 'linear'

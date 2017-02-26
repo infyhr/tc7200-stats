@@ -1,5 +1,5 @@
 const ipc = require('electron').ipcRenderer;
-const app = require('electron').app;
+const remote = require('electron').remote;
 
 function grabData() {
     let data = {};
@@ -16,7 +16,7 @@ const abortBtn  = document.querySelector('button[name="abort"]');
 const submitBtn = document.querySelector('button[name="submit"]');
 abortBtn.addEventListener('click', e => {
     e.preventDefault();
-    app.quit();
+    remote.app.quit();
 });
 submitBtn.addEventListener('click', e => {
     e.preventDefault();

@@ -79,7 +79,7 @@
                 graph.pwrLineChart.config.data.labels.push(now);
                 graph.pwrLineChart.config.data.datasets[0].data.push(getAvg(stats[2]));
                 graph.pwrLineChart.update();
-            }, 1000);
+            }, 100000);
 
             function getAvg(arr) {
                 return arr.reduce((a, b) => {
