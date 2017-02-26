@@ -23,7 +23,7 @@
             <h1>Signal to Noise ratio</h1>
             <div class="wrapper">
                 <div class="row">
-                    <canvas id="myChart"></canvas>
+                    <canvas id="snrBar"></canvas>
                 </div>
                 <div class="row">hello2</div>
             </div>
@@ -36,7 +36,10 @@
             let graph  = require('../js/graph.js'); // Own graphs (charts)
 
             // Short poll for new data
-            setInterval(() => {
+            index.getData(function(results){
+                stats = results;
+            });
+            /*setInterval(() => {
                 index.getData(function(results){
                     stats = results;
                 });
@@ -44,7 +47,7 @@
                 // Update each chart here
                 graph.myChart.config.data.datasets[0].data = stats[0];
                 graph.myChart.update();
-            }, 1000);
+            }, 1000);*/
 
             // temp debug
             document.addEventListener('keydown', function (e) {    
