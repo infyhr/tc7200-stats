@@ -20,12 +20,22 @@
         </nav>
 
         <div class="content">
-            <h1>Signal to Noise ratio</h1>
+            <h1>Downstream Signal to Noise ratio</h1>
             <div class="wrapper">
                 <div class="row">
                     <canvas id="snrBar"></canvas>
                 </div>
-                <div class="row">hello2</div>
+                <div class="row">
+                    <canvas id="pwrBar"></canvas>
+                </div>
+            </div>
+            <div class="wrapper">
+                <div class="row">
+                    <canvas id="snrLine"></canvas>
+                </div>
+                <div class="row">
+                    <canvas id="pwrLine"></canvas>
+                </div>
             </div>
         </div>
 
@@ -35,19 +45,47 @@
             let index = require('../js/index.js'); // "Serverside" JS
             let graph  = require('../js/graph.js'); // Own graphs (charts)
 
-            // Short poll for new data
-            index.getData(function(results){
+            /*index.getData(function(results){
                 stats = results;
-            });
-            /*setInterval(() => {
+
+                console.log(stats);
+            });*/
+
+            // Short poll for new data
+            setInterval(() => {
                 index.getData(function(results){
                     stats = results;
                 });
+                // Grab the current time
+                let d = new Date();
+                let now = d.getHours() + ':' + d.getMinutes() + ':' + d.getSeconds();
 
-                // Update each chart here
-                graph.myChart.config.data.datasets[0].data = stats[0];
-                graph.myChart.update();
-            }, 1000);*/
+                // Update the SNR bar chart
+                graph.snrBarChart.config.data.labels = stats[0];
+                graph.snrBarChart.config.data.datasets[0].data = stats[1];
+                graph.snrBarChart.update();
+
+                // And the power bar chart
+                graph.pwrBarChart.config.data.labels = stats[0];
+                graph.pwrBarChart.config.data.datasets[0].data = stats[2];
+                graph.pwrBarChart.update();
+
+                // Average SnR chart
+                graph.snrLineChart.config.data.labels.push(now);
+                graph.snrLineChart.config.data.datasets[0].data.push(getAvg(stats[1]));
+                graph.snrLineChart.update();
+
+                // Average power chart
+                graph.pwrLineChart.config.data.labels.push(now);
+                graph.pwrLineChart.config.data.datasets[0].data.push(getAvg(stats[2]));
+                graph.pwrLineChart.update();
+            }, 1000);
+
+            function getAvg(arr) {
+                return arr.reduce((a, b) => {
+                    return parseFloat(a) + parseFloat(b);
+                }) / stats[1].length;
+            }
 
             // temp debug
             document.addEventListener('keydown', function (e) {    

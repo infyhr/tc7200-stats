@@ -18,9 +18,13 @@ function getRandomArbitrary(min, max) {
 }
 
 /*
-Extracts data from the HTTP response and returns it, just some simple regex stuff
+Extracts data from the HTTP response and returns it, just some simple regex stuff.
+It's very ugly, but alas it's not quite possible to make this code more appealing
+as it's just scraping data and storing it into one big array...
 */
 function extractData(data) {
+    ret = [[], [], [], [], []];
+    
     // Downstream
     const re_dsChannels = /\d<\/td><td align="right">(\d{1,2})<\/td>/gi
     const re_dsSnr = /<td align="right">(\d{1,2}\.\d) dB<\/td>/gi
@@ -36,9 +40,9 @@ function extractData(data) {
     let ds_pwr = re_dsPwr.exec(data);
     // Loop through all the results
     while(ds_snr != null) { // Will be the same for all three
-        /*console.log(ds_channels[1]);
-        console.log(ds_snr[1]);
-        console.log(ds_pwr[2]);*/
+        ret[0].push(ds_channels[1]);
+        ret[1].push(ds_snr[1]);
+        ret[2].push(ds_pwr[2]);
 
         ds_channels = re_dsChannels.exec(data);
         ds_snr = re_dsSnr.exec(data);
@@ -49,12 +53,14 @@ function extractData(data) {
     let us_channels = re_usChannels.exec(data);
     let us_pwr = re_usPower.exec(data);
     while(us_pwr != null) {
-        console.log(us_channels[1]);
-        console.log(us_pwr[1]);
+        ret[3].push(us_channels[1]);
+        ret[4].push(us_pwr[1]);
 
         us_channels = re_usChannels.exec(data);
         us_pwr = re_usPower.exec(data);
-    }
+    }    
+
+    return ret;
 }
 
 /*
@@ -87,23 +93,7 @@ exports.getData = function(callback) {
         // The whole response has been recieved
         response.on('end', function () {
             ret = extractData(data);
-            //console.log(test);
-            /*data = [
-                [
-                getRandomArbitrary(20, 40),
-                40.8,
-                12.5,
-                41.5,
-                38.7,
-                37.1
-                ],
-                [
-                43.0,
-                43.0
-                ]
-            ]
-            //console.log(data);
-            callback(data);*/
+            callback(ret);
         });
 
         response.on('error', function(e) {
