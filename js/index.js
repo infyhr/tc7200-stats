@@ -27,7 +27,7 @@ function extractData(data) {
     const re_dsPwr = /<td align="right">(\s|-)?([1-9]{1,2}\.\d) dBmV<\/td><t/gi
 
     // Upstream
-    const re_usChannels = /\d<\/td><td align="right">\d{1,2}<\/td>/gi
+    const re_usChannels = /\d<\/td><td align="right">(\d)<\/td>/gi
     const re_usPower = /<td align="right">?(\d{1,2}\.\d) dBmV<\/td><\//gi
 
     // Execute downstream regex matching
@@ -36,13 +36,24 @@ function extractData(data) {
     let ds_pwr = re_dsPwr.exec(data);
     // Loop through all the results
     while(ds_snr != null) { // Will be the same for all three
-        console.log(ds_channels[1]);
+        /*console.log(ds_channels[1]);
         console.log(ds_snr[1]);
-        console.log(ds_pwr[2]);
+        console.log(ds_pwr[2]);*/
 
         ds_channels = re_dsChannels.exec(data);
         ds_snr = re_dsSnr.exec(data);
         ds_pwr = re_dsPwr.exec(data);
+    }
+
+    // Now do the same for upstream
+    let us_channels = re_usChannels.exec(data);
+    let us_pwr = re_usPower.exec(data);
+    while(us_pwr != null) {
+        console.log(us_channels[1]);
+        console.log(us_pwr[1]);
+
+        us_channels = re_usChannels.exec(data);
+        us_pwr = re_usPower.exec(data);
     }
 }
 
