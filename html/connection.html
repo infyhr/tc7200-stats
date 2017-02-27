@@ -11,7 +11,7 @@
         <div id="connectionInfo">
             <div class="row">
                 <span class="inputWhat">Default gateway</span>
-                <input name="defaultGateway" type="text" value="192.168.0.1:80" class="inputData">
+                <input name="defaultGateway" type="text" value="192.168.0.1" class="inputData">
             </div>
 
             <div class="row">
@@ -28,13 +28,22 @@
             </div>
 
             <div class="row">
+                <span class="inputWhat">Username</span>
+                <input name="username" type="text" class="inputData" value="">
+            </div>
+
+            <div class="row">
+                <span class="inputWhat">Password</span>
+                <input name="password" type="text" class="inputData" value="admin">
+            </div>
+
+            <div class="row">
                 <button name="submit" value="Start" style="margin-right: 1%;">Start</button>
                 <button name="abort" value="Abort">Abort</button>
             </div>
         </div>
     </body>
 
-    <!--<script src="file:///D:\tc7200-stats\js\connection.js">-->
     <script>
         require('../js/connection.js');
     </script>
