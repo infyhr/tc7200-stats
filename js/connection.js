@@ -4,7 +4,7 @@ const remote = require('electron').remote;
 function grabData() {
     let data = {};
 
-    ["defaultGateway", "protocol", "statsURL", "username", "password"].forEach(v => {
+    ["defaultGateway", "protocol", "statsURL", "username", "password", "interval"].forEach(v => {
         console.log("Currently fetching " + v);
         data[v] = document.querySelector('[name=' + v + ']').value;
     });

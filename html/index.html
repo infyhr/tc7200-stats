@@ -19,19 +19,28 @@
             <h1>Downstream Signal to Noise ratio</h1>
             <div class="wrapper">
                 <div class="row">
-                    <canvas id="snrBar"></canvas>
+                    <canvas id="ds_snrBar"></canvas>
                 </div>
                 <div class="row">
-                    <canvas id="snrLine"></canvas>
+                    <canvas id="ds_snrLine"></canvas>
                 </div>
             </div>
             <h1>Downstream Power levels</h1>
             <div class="wrapper">
                 <div class="row">
-                    <canvas id="pwrBar"></canvas>
+                    <canvas id="ds_pwrBar"></canvas>
                 </div>
                 <div class="row">
-                    <canvas id="pwrLine"></canvas>
+                    <canvas id="ds_pwrLine"></canvas>
+                </div>
+            </div>
+            <h1>Upstream Power levels</h1>
+            <div class="wrapper">
+                <div class="row">
+                    <canvas id="us_pwrBar"></canvas>
+                </div>
+                <div class="row">
+                    <canvas id="us_pwrLine"></canvas>
                 </div>
             </div>
         </div>
@@ -41,12 +50,6 @@
             let stats = []; // Data returned from the gateway
             let index = require('../js/index.js'); // "Serverside" JS
             let graph = require('../js/graph.js'); // Own graphs (charts)
-
-            /*index.getData(function(results){
-                stats = results;
-
-                console.log(stats);
-            });*/
 
             // Short poll for new data
             setInterval(() => {
@@ -76,7 +79,18 @@
                 graph.pwrLineChart.config.data.labels.push(now);
                 graph.pwrLineChart.config.data.datasets[0].data.push(getAvg(stats[2]));
                 graph.pwrLineChart.update();
-            }, 5000);
+
+                /*
+                Now do the same for upstream
+                */
+                graph.us_pwrBarChart.config.data.labels = stats[3];
+                graph.us_pwrBarChart.config.data.datasets[0].data = stats[4];
+                graph.us_pwrBarChart.update();
+
+                graph.us_pwrLineChart.config.data.labels.push(now);
+                graph.us_pwrLineChart.config.data.datasets[0].data.push(getAvg(stats[4]));
+                graph.us_pwrLineChart.update();
+            }, 1000);
 
             function getAvg(arr) {
                 return arr.reduce((a, b) => {

@@ -8,14 +8,7 @@ let connectionData;
 // Receive connection data
 ipc.on('connectionInit', (event, message) => {
     connectionData = JSON.parse(message);
-
-    console.log('wow it works: ');
-    console.log(connectionData);
 });
-
-function getRandomArbitrary(min, max) {
-    return Math.random() * (max - min) + min;
-}
 
 /*
 Extracts data from the HTTP response and returns it, just some simple regex stuff.
@@ -40,7 +33,6 @@ function extractData(data) {
     let ds_pwr = re_dsPwr.exec(data);
     // Loop through all the results
     while(ds_snr != null) { // Will be the same for all three
-        console.log(ds_pwr);
         ret[0].push(ds_channels[1]);
         ret[1].push(ds_snr[1]);
         ret[2].push(ds_pwr[2]);
@@ -61,7 +53,7 @@ function extractData(data) {
         us_pwr = re_usPower.exec(data);
     }    
 
-return ret;
+    return ret;
 }
 
 /*
@@ -108,3 +100,5 @@ exports.getData = function(callback) {
 
     http.request(options, res).end();
 }
+
+exports.connectionData = connectionData;
