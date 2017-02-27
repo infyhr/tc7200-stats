@@ -1,6 +1,7 @@
 # tc7200-stats
 Graph live statistics from Technicolor TC7200.
 Made for **personal use** on `STDD.01.05`, but it might work with other versions as well.
+![stats](/screenshot.jpg?raw=true "stats")
 
 ## Requirements
 Are all specified in `package.json`, so you needn't manually obtain them (see Installation)
