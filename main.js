@@ -46,7 +46,7 @@ ipc.on('connectionInit', (event, message) => {
     mainWindow.show();
 
     // debug
-    mainWindow.webContents.openDevTools();
+    //mainWindow.webContents.openDevTools();
 });
 
 // Spawns a Connection Dialog
@@ -67,7 +67,7 @@ function openConnectionDialog() {
         slashes: true
     }))
 
-    connectionDialog.webContents.openDevTools();
+    //connectionDialog.webContents.openDevTools();
 }
 
 // Quit when the connection dialog is closed
